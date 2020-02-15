@@ -23,9 +23,9 @@ jobs:
             wget -q https://raw.githubusercontent.com/PitchBlackRecoveryProject/vendor_pb/pb/build.sh
             source build.sh
 workflows:
-  version: 2#version: 2
-
-
+  version: 2
+  
+#version: 2
 #jobs:
 #  compile:
 #    docker:
