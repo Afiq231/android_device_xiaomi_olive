@@ -1,4 +1,31 @@
-#version: 2
+version: 2
+jobs:
+  build:
+    docker:
+      - image: fr3akyphantom/droid-builder:latest
+    environment:
+      MANIFEST_BRANCH: 'android-9.0'
+      VERSION: '2.9.0'
+      VENDOR: 'xiaomi'
+      CODENAME: 'olive'
+      BUILD_LUNCH: 'omni_olive-eng'
+      TEST_BUILD: 'true'
+    working_directory: /home/builder/pitchblack
+    steps:
+      - checkout
+      - run:
+          name: AIO Build
+          command: |
+            echo "Set GitAuth Infos"
+            git config --global user.email $GitHubMail
+            git config --global user.name $GitHubName
+            git config --global color.ui true
+            wget -q https://raw.githubusercontent.com/PitchBlackRecoveryProject/vendor_pb/pb/build.sh
+            source build.sh
+workflows:
+  version: 2#version: 2
+
+
 #jobs:
 #  compile:
 #    docker:
@@ -38,6 +65,6 @@
 #         ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -n "Latest Release for $(echo $DEVICE)" -b "PitchBlack $(echo $VERSION)" -c ${CIRCLE_SHA1} -delete ${VERSION} ${UPLOAD_PATH}
 #workflows:
 # version: 2
-  cooking:
-    jobs:
-    - compile
+# cooking:
+#   jobs:
+#   - compile
